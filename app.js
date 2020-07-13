@@ -4,22 +4,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const xmlparser = require('express-xml-bodyparser');
-const { ApolloServer, gql } = require('apollo-server-express');
-
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-};
-
+const { ApolloServer } = require('apollo-server-express');
+const { typeDefs, resolvers } = require('./schema/schema');
 const routes = require('./routes/index');
 
 const server = new ApolloServer({ typeDefs, resolvers });

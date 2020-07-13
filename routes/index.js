@@ -202,6 +202,95 @@ router.get('/booking/:id', function (req, res, next) {
 });
 
 /**
+ * @api {get} /allBooking GetAllBooking
+ * @apiName GetBooking
+ * @apiGroup Booking
+ * @apiVersion 1.0.0
+ * @apiDescription Returns a specific booking based upon the booking id provided
+ * 
+ * @apiParam (Url Parameter) {String} id The id of the booking you would like to retrieve
+ * 
+ * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
+ * 
+ * @apiExample Example 1 (Get booking):
+ * curl -i https://restful-booker.herokuapp.com/allBooking
+ * 
+ * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
+ * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
+ * @apiSuccess {Number}  totalprice            The total price for the booking
+ * @apiSuccess {Boolean} depositpaid           Whether the deposit has been paid or not
+ * @apiSuccess {Object}  bookingdates          Sub-object that contains the checkin and checkout dates
+ * @apiSuccess {Date}    bookingdates.checkin  Date the guest is checking in
+ * @apiSuccess {Date}    bookingdates.checkout Date the guest is checking out
+ * @apiSuccess {String}  additionalneeds       Any other needs the guest has
+ * 
+ * @apiSuccessExample {json} JSON Response:
+ * HTTP/1.1 200 OK
+ * 
+ * [{
+    "firstname": "Sally",
+    "lastname": "Brown",
+    "totalprice": 111,
+    "depositpaid": true,
+    "bookingdates": {
+        "checkin": "2013-02-23",
+        "checkout": "2014-10-23"
+    },
+    "additionalneeds": "Breakfast"
+},
+{
+    "firstname": "Sally",
+    "lastname": "Brown",
+    "totalprice": 111,
+    "depositpaid": true,
+    "bookingdates": {
+        "checkin": "2013-02-23",
+        "checkout": "2014-10-23"
+    },
+    "additionalneeds": "Breakfast"
+}]
+ * @apiSuccessExample {xml} XML Response:
+ * HTTP/1.1 200 OK
+ * 
+ * <booking>
+    <firstname>Sally</firstname>
+    <lastname>Brown</lastname>
+    <totalprice>111</totalprice>
+    <depositpaid>true</depositpaid>
+    <bookingdates>
+        <checkin>2013-02-23</checkin>
+        <checkout>2014-10-23</checkout>
+    </bookingdates>
+    <additionalneeds>Breakfast</additionalneeds>
+</booking>
+<booking>
+    <firstname>Sally</firstname>
+    <lastname>Brown</lastname>
+    <totalprice>111</totalprice>
+    <depositpaid>true</depositpaid>
+    <bookingdates>
+        <checkin>2013-02-23</checkin>
+        <checkout>2014-10-23</checkout>
+    </bookingdates>
+    <additionalneeds>Breakfast</additionalneeds>
+</booking>
+ *
+ * @apiSuccessExample {url} URL Response:
+ * HTTP/1.1 200 OK
+ * 
+ * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
+ */
+router.get('/allBooking', function (req, res, next) {
+  Booking.getAllBooking({}, function (err, record) {
+    if (!record) {
+      res.sendStatus(418);
+    } else {
+      res.send(record);
+    }
+  });
+});
+
+/**
  * @api {post} /booking CreateBooking
  * @apiName CreateBooking
  * @apiGroup Booking
