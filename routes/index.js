@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router(),
   parse = require('../helpers/parser'),
   crypto = require('crypto'),
+  User = require('../models/user'),
   Booking = require('../models/booking'),
   validator = require('../helpers/validator'),
   creator = require('../helpers/bookingcreator'),
+  data = require('../models/datasource'),
   fs = require('fs'),
   globalLogins = {},
   _ = require('lodash'),
@@ -36,6 +38,11 @@ if (process.env.SEED === 'true') {
     });
   })();
 }
+
+router.get('/all', function (req, res, next) {
+  const allData = data.getAllData();
+  res.send(allData);
+});
 
 /**
  * @api {get} /ping HealthCheck
@@ -398,7 +405,6 @@ router.get('/allBooking', function (req, res, next) {
  */
 router.post('/booking', function (req, res, next) {
   let newBooking = req.body;
-
   const payloadKeys = _.flatMap(
     Object.keys(newBooking).map((key) => {
       if (newBooking[key] instanceof Object)
@@ -411,7 +417,7 @@ router.post('/booking', function (req, res, next) {
 
   if (req.headers['content-type'] === 'text/xml') newBooking = newBooking.booking;
 
-  validator.scrubAndValidate(newBooking, function (payload, msg) {
+  validator.scrubAndValidateBooking(newBooking, function (payload, msg) {
     if (!msg) {
       Booking.create(newBooking, function (err, booking) {
         if (err) res.sendStatus(500);
@@ -554,7 +560,7 @@ router.put('/booking/:id', function (req, res, next) {
     updatedBooking = req.body;
     if (req.headers['content-type'] === 'text/xml') updatedBooking = updatedBooking.booking;
 
-    validator.scrubAndValidate(updatedBooking, function (payload, msg) {
+    validator.scrubAndValidateBooking(updatedBooking, function (payload, msg) {
       if (!msg) {
         Booking.update(req.params.id, updatedBooking, function (err) {
           Booking.get(req.params.id, function (err, record) {
@@ -794,6 +800,50 @@ router.post('/auth', function (req, res, next) {
   } else {
     res.send({ reason: 'Bad credentials' });
   }
+});
+
+router.post('/user', function (req, res, next) {
+  let newUser = req.body;
+  if (req.headers['content-type'] === 'text/xml') newUser = newUser.user;
+  validator.scrubAndValidateUser(newUser, function (payload, msg) {
+    if (!msg) {
+      User.create(newUser, function (err, user) {
+        if (err) res.status(500).send(err);
+        else {
+          if (!user) {
+            res.sendStatus(418);
+          } else {
+            res.send(user);
+          }
+        }
+      });
+    } else {
+      res.status(500).send(msg);
+    }
+  });
+});
+
+router.post('/user/booking', function (req, res, next) {
+  let booking = req.body;
+  if (req.headers['content-type'] === 'text/xml') booking = booking.booking;
+  validator.scrubAndValidateBookingWithExistUser(booking, function (payload, msg) {
+    if (!msg) {
+      User.get(booking.userId, function (err, user) {
+        if (user) {
+          booking.firstname = user.firstname;
+          booking.lastname = user.lastname;
+          Booking.create(booking, function (err, result) {
+            if (err) res.status(500).send(err);
+            else {
+              res.send(result);
+            }
+          });
+        } else res.status(500).send("Can't find user information");
+      });
+    } else {
+      res.status(500).send(msg);
+    }
+  });
 });
 
 module.exports = router;
