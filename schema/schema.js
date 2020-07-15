@@ -4,6 +4,8 @@ const {
   getAllUserResolver,
   getBookResolver,
   getUserResolver,
+  createBookingResolver,
+  createUserResolver,
 } = require('./resolvers');
 
 const typeBookDefs = require('./book.typedef');
@@ -19,6 +21,38 @@ const typeQueryDefs = `
   }
 `;
 
+const typeMutationDefs = `
+
+  input UserInput {
+    firstname: String
+    lastname: String
+    email: String
+  }
+
+  input BookingInput{
+    firstname: String
+    lastname: String
+    totalprice: Int
+    depositpaid: Boolean
+    bookingdates: BookingDatesInput
+  }
+
+  input BookingDatesInput {
+    checkin: String
+    checkout: String
+  }
+
+  type Mutation {
+      createBooking (
+        input: BookingInput
+      ): Book
+
+      craeteUser(
+        input:UserInput
+      ): User
+    }
+`;
+
 const resolvers = {
   Query: {
     hello: (_, args) => {
@@ -29,10 +63,14 @@ const resolvers = {
     books: getAllBookResolver,
     book: getBookResolver,
   },
+  Mutation: {
+    createBooking: createBookingResolver,
+    craeteUser: createUserResolver,
+  },
 };
 
 const schema = makeExecutableSchema({
-  typeDefs: [typeQueryDefs, typeBookDefs, typeUserDefs],
+  typeDefs: [typeQueryDefs, typeBookDefs, typeUserDefs, typeMutationDefs],
   resolvers,
 });
 

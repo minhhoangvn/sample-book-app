@@ -71,9 +71,29 @@ const getBookResolver = (_, { bookingId }) => {
   });
 };
 
+const createBookingResolver = (_, { input }) => {
+  return new Promise((res, rej) => {
+    Booking.create(input, (err, record) => {
+      if (!record) rej(err);
+      else res(record);
+    });
+  });
+};
+
+const createUserResolver = (_, { input }) => {
+  return new Promise((res, rej) => {
+    User.create(input, (err, record) => {
+      if (!record) rej(err);
+      else res(record);
+    });
+  });
+};
+
 module.exports = {
   getAllUserResolver,
   getUserResolver,
   getAllBookResolver,
   getBookResolver,
+  createBookingResolver,
+  createUserResolver,
 };
