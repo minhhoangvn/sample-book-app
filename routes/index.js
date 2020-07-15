@@ -838,7 +838,12 @@ router.post('/user/booking', function (req, res, next) {
               res.send(result);
             }
           });
-        } else res.status(500).send("Can't find user information");
+        } else {
+          User.getAllUsers({}, (_, users) => {
+            res.setHeader('all-users', JSON.stringify(users));
+            res.status(500).send("Can't find user information");
+          });
+        }
       });
     } else {
       res.status(500).send(msg);

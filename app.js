@@ -5,10 +5,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const xmlparser = require('express-xml-bodyparser');
 const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schema/schema');
+const { schema } = require('./schema/schema');
 const routes = require('./routes/index');
-
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ schema });
 const app = express();
 
 server.applyMiddleware({ app });
