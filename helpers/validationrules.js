@@ -1,6 +1,5 @@
 exports.returnBookingExistUserRuleSet = function () {
   var constraints = {
-    userId: { presence: true, numericality: true },
     totalprice: { presence: true },
     depositpaid: { presence: true },
     'bookingdates.checkin': { presence: true },
@@ -28,6 +27,7 @@ exports.returnUserRuleSet = function () {
     firstname: { presence: true },
     lastname: { presence: true },
     email: { presence: true, email: true },
+    password: { presence: true },
   };
 
   return constraints;

@@ -24,6 +24,16 @@ exports.get = function (id, callback) {
   });
 };
 
+exports.getByEmail = function (email, callback) {
+  findOne({ email }, function (err, user) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, user);
+    }
+  });
+};
+
 exports.getAllUsers = function (query, callback) {
   find(query, function (err, users) {
     if (err) {

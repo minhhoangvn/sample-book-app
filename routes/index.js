@@ -52,7 +52,7 @@ router.get('/all', function (req, res, next) {
  * @apiDescription A simple health check endpoint to confirm whether the API is up and running.
  *
  * @apiExample Ping server:
- * curl -i https://restful-booker.herokuapp.com/ping
+ * curl -i http://localhost:3001/ping
  *
  * @apiSuccess {String} OK Default HTTP 201 response
  *
@@ -76,13 +76,13 @@ router.get('/ping', function (req, res, next) {
  * @apiParam {date}   [checkout]  Return bookings that have a checkout date greater than or equal to the set checkout date. Format must be CCYY-MM-DD
  * 
  * @apiExample Example 1 (All IDs):
- * curl -i https://restful-booker.herokuapp.com/booking
+ * curl -i http://localhost:3001/booking
  * 
  * @apiExample Example 2 (Filter by name):
- * curl -i https://restful-booker.herokuapp.com/booking?firstname=sally&lastname=brown
+ * curl -i http://localhost:3001/booking?firstname=sally&lastname=brown
  * 
  * @apiExample Example 3 (Filter by checkin/checkout date):
- * curl -i https://restful-booker.herokuapp.com/booking?checkin=2014-03-13&checkout=2014-05-21
+ * curl -i http://localhost:3001/booking?checkin=2014-03-13&checkout=2014-05-21
  * 
  * @apiSuccess {object[]} object Array of objects that contain unique booking IDs
  * @apiSuccess {number} object.bookingid ID of a specific booking that matches search criteria
@@ -147,7 +147,7 @@ router.get('/booking', function (req, res, next) {
  * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
  * 
  * @apiExample Example 1 (Get booking):
- * curl -i https://restful-booker.herokuapp.com/booking/1
+ * curl -i http://localhost:3001/booking/1
  * 
  * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
  * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
@@ -210,7 +210,7 @@ router.get('/booking/:id', function (req, res, next) {
 
 /**
  * @api {get} /allBooking GetAllBooking
- * @apiName GetBooking
+ * @apiName GetAllBooking
  * @apiGroup Booking
  * @apiVersion 1.0.0
  * @apiDescription Returns a specific booking based upon the booking id provided
@@ -220,7 +220,7 @@ router.get('/booking/:id', function (req, res, next) {
  * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
  * 
  * @apiExample Example 1 (Get booking):
- * curl -i https://restful-booker.herokuapp.com/allBooking
+ * curl -i http://localhost:3001/allBooking
  * 
  * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
  * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
@@ -317,7 +317,7 @@ router.get('/allBooking', function (req, res, next) {
  * 
  * @apiExample JSON example usage:
  * curl -X POST \
-  https://restful-booker.herokuapp.com/booking \
+  http://localhost:3001/booking \
   -H 'Content-Type: application/json' \
   -d '{
     "firstname" : "Jim",
@@ -332,7 +332,7 @@ router.get('/allBooking', function (req, res, next) {
 }'
  * @apiExample XML example usage:
  * curl -X POST \
-  https://restful-booker.herokuapp.com/booking \
+  http://localhost:3001/booking \
   -H 'Content-Type: text/xml' \
   -d '<booking>
     <firstname>Jim</firstname>
@@ -348,7 +348,7 @@ router.get('/allBooking', function (req, res, next) {
  *
  * @apiExample URLencoded example usage:
  * curl -X POST \
-  https://restful-booker.herokuapp.com/booking \
+  http://localhost:3001/booking \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'
  * 
@@ -467,7 +467,7 @@ router.post('/booking', function (req, res, next) {
  * 
  * @apiExample JSON example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'Cookie: token=abc123' \
@@ -485,7 +485,7 @@ router.post('/booking', function (req, res, next) {
  *
  * @apiExample XML example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: text/xml' \
   -H 'Accept: application/xml' \
   -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
@@ -503,7 +503,7 @@ router.post('/booking', function (req, res, next) {
  *
  * @apiExample URLencoded example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -H 'Accept: application/x-www-form-urlencoded' \
   -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
@@ -610,7 +610,7 @@ router.put('/booking/:id', function (req, res, next) {
  * 
  * @apiExample JSON example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'Cookie: token=abc123' \
@@ -621,7 +621,7 @@ router.put('/booking/:id', function (req, res, next) {
  *
  * @apiExample XML example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: text/xml' \
   -H 'Accept: application/xml' \
   -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
@@ -632,7 +632,7 @@ router.put('/booking/:id', function (req, res, next) {
  *
  * @apiExample URLencoded example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -H 'Accept: application/x-www-form-urlencoded' \
   -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
@@ -724,13 +724,13 @@ router.patch('/booking/:id', function (req, res) {
  * 
  * @apiExample Example 1 (Cookie):
  * curl -X DELETE \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Cookie: token=abc123'
  *
  * @apiExample Example 2 (Basic auth):
  * curl -X DELETE \
-  https://restful-booker.herokuapp.com/booking/1 \
+  http://localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM='
  * 
@@ -772,7 +772,7 @@ router.delete('/booking/:id', function (req, res, next) {
  * 
  * @apiExample Example 1:
  * curl -X POST \
-  https://restful-booker.herokuapp.com/auth \
+  http://localhost:3001/auth \
   -H 'Content-Type: application/json' \
   -d '{
     "username" : "admin",
@@ -802,6 +802,43 @@ router.post('/auth', function (req, res, next) {
   }
 });
 
+/**
+ * @api {post} /user CreateUser
+ * @apiName CreateUser
+ * @apiGroup Auth
+ * @apiVersion 1.0.0
+ * @apiDescription Creates a new user information use for access to the POST /booking
+ * 
+ * @apiParam (Request body) {String}  username=admin        Username for authentication
+ * @apiParam (Request body) {String}  password=password123  Password for authentication
+ * 
+ * @apiHeader {string} Content-Type=application/json        Sets the format of payload you are sending
+ * 
+ * @apiExample Example 1:
+ * curl -X POST \
+  http://localhost:3001/auth \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "firstname" : "sampleFirstName",
+    "lastname" : "sampleLastName",
+    "email": "sample@email.com",
+    "password": "samplePassword"
+
+}'
+ * @apiSuccess {Number}  User ID
+ * @apiSuccess {String}  firstname Firstname for the guest who made the booking
+ * @apiSuccess {String}  lastname  Lastname for the guest who made the booking
+ * @apiSuccess {String}  email  Lastname for the guest who made the booking
+ * @apiSuccessExample {json} Response:
+ * HTTP/1.1 200 OK
+ * 
+ * {
+    "firstname" : "sampleFirstName",
+    "lastname" : "sampleLastName",
+    "email": "sample@email.com",
+    "userId": 1
+}
+ */
 router.post('/user', function (req, res, next) {
   let newUser = req.body;
   if (req.headers['content-type'] === 'text/xml') newUser = newUser.user;
@@ -813,7 +850,8 @@ router.post('/user', function (req, res, next) {
           if (!user) {
             res.sendStatus(418);
           } else {
-            res.send(user);
+            const { firstname, lastname, email, userId } = user;
+            res.send({ firstname, lastname, email, userId });
           }
         }
       });
@@ -823,27 +861,137 @@ router.post('/user', function (req, res, next) {
   });
 });
 
+/**
+ * @api {post} user/booking UserCreateBooking
+ * @apiName UserCreateBooking
+ * @apiGroup Booking
+ * @apiVersion 1.0.0
+ * @apiDescription Creates a new booking in the API
+ * 
+ * @apiParam (Request body) {Number}  totalprice            The total price for the booking
+ * @apiParam (Request body) {Boolean} depositpaid           Whether the deposit has been paid or not
+ * @apiParam (Request body) {Date}    bookingdates.checkin  Date the guest is checking in
+ * @apiParam (Request body) {Date}    bookingdates.checkout Date the guest is checking out
+ * @apiParam (Request body) {String}  additionalneeds       Any other needs the guest has
+
+ * @apiHeader {string} [Authorization=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the PUT endpoint, can be used as an alternative to the Cookie header
+ * @apiHeader {string} Content-Type=application/json Sets the format of payload you are sending. Can be application/json or text/xml
+ * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
+ * 
+ * @apiExample JSON example usage:
+ * curl -X POST \
+  http://localhost:3001/booking \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "totalprice" : 111,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2018-01-01",
+        "checkout" : "2019-01-01"
+    },
+    "additionalneeds" : "Breakfast"
+}'
+ * @apiExample XML example usage:
+ * curl -X POST \
+  http://localhost:3001/booking \
+  -H 'Content-Type: text/xml' \
+  -d '<booking>
+    <firstname>Jim</firstname>
+    <lastname>Brown</lastname>
+    <totalprice>111</totalprice>
+    <depositpaid>true</depositpaid>
+    <bookingdates>
+      <checkin>2018-01-01</checkin>
+      <checkout>2019-01-01</checkout>
+    </bookingdates>
+    <additionalneeds>Breakfast</additionalneeds>
+  </booking>'
+ *
+ * @apiExample URLencoded example usage:
+ * curl -X POST \
+  http://localhost:3001/booking \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'
+ * 
+ * @apiSuccess {Number}  bookingid                     ID for newly created booking
+ * @apiSuccess {Object}  booking                       Object that contains 
+ * @apiSuccess {String}  booking.firstname             Firstname for the guest who made the booking
+ * @apiSuccess {String}  booking.lastname              Lastname for the guest who made the booking
+ * @apiSuccess {Number}  booking.totalprice            The total price for the booking
+ * @apiSuccess {Boolean} booking.depositpaid           Whether the deposit has been paid or not
+ * @apiSuccess {Object}  booking.bookingdates          Sub-object that contains the checkin and checkout dates
+ * @apiSuccess {Date}    booking.bookingdates.checkin  Date the guest is checking in
+ * @apiSuccess {Date}    booking.bookingdates.checkout Date the guest is checking out
+ * @apiSuccess {String}  booking.additionalneeds       Any other needs the guest has
+ * 
+ * @apiSuccessExample {json} JSON Response:
+ * HTTP/1.1 200 OK
+ * 
+ * {
+    "bookingid": 1,
+    "booking": {
+        "firstname": "Jim",
+        "lastname": "Brown",
+        "totalprice": 111,
+        "depositpaid": true,
+        "bookingdates": {
+            "checkin": "2018-01-01",
+            "checkout": "2019-01-01"
+        },
+        "additionalneeds": "Breakfast"
+    }
+}
+ * @apiSuccessExample {xml} XML Response:
+ * HTTP/1.1 200 OK
+ * 
+ * <?xml version='1.0'?>
+<created-booking>
+    <bookingid>1</bookingid>
+    <booking>
+        <firstname>Jim</firstname>
+        <lastname>Brown</lastname>
+        <totalprice>111</totalprice>
+        <depositpaid>true</depositpaid>
+        <bookingdates>
+            <checkin>2018-01-01</checkin>
+            <checkout>2019-01-01</checkout>
+        </bookingdates>
+        <additionalneeds>Breakfast</additionalneeds>
+    </booking>
+</created-booking>
+ * @apiSuccessExample {url} URL Response:
+ * HTTP/1.1 200 OK
+ * 
+ * bookingid=1&booking%5Bfirstname%5D=Jim&booking%5Blastname%5D=Brown&booking%5Btotalprice%5D=111&booking%5Bdepositpaid%5D=true&booking%5Bbookingdates%5D%5Bcheckin%5D=2018-01-01&booking%5Bbookingdates%5D%5Bcheckout%5D=2019-01-01
+ */
 router.post('/user/booking', function (req, res, next) {
   let booking = req.body;
+  const authorization = req.headers['authorization'];
   if (req.headers['content-type'] === 'text/xml') booking = booking.booking;
+  if (!authorization || authorization.indexOf('Basic ') === -1)
+    return res.status(401).json({ message: 'Missing Authorization Header' });
+  const base64Credentials = authorization.split(' ')[1];
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
+  const [email, password] = credentials.split(':');
   validator.scrubAndValidateBookingWithExistUser(booking, function (payload, msg) {
     if (!msg) {
-      User.get(booking.userId, function (err, user) {
-        if (user) {
-          booking.firstname = user.firstname;
-          booking.lastname = user.lastname;
-          Booking.create(booking, function (err, result) {
-            if (err) res.status(500).send(err);
-            else {
-              res.send(result);
-            }
-          });
-        } else {
-          User.getAllUsers({}, (_, users) => {
+      User.getByEmail(email, function (err, user) {
+        if (!user) {
+          return User.getAllUsers({}, (_, users) => {
             res.setHeader('all-users', JSON.stringify(users));
             res.status(500).send("Can't find user information");
           });
         }
+        if (user.password !== password)
+          return res.status(403).json({ message: 'Invalid Authentication Credentials' });
+        booking.firstname = user.firstname;
+        booking.lastname = user.lastname;
+        Booking.create(booking, function (err, result) {
+          if (err) res.status(500).send(err);
+          else {
+            res.send(result);
+          }
+        });
       });
     } else {
       res.status(500).send(msg);
