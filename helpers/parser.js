@@ -1,39 +1,39 @@
-var js2xmlparser = require("js2xmlparser"),
-    dateFormat = require('dateformat');
-    formurlencoded = require('form-urlencoded').default;
+var js2xmlparser = require('js2xmlparser'),
+  dateFormat = require('dateformat');
+formurlencoded = require('form-urlencoded').default;
 
-exports.bookingids = function(req, rawBooking){
+exports.bookingids = function (req, rawBooking) {
   var payload = [];
 
-  rawBooking.forEach(function(b){
+  rawBooking.forEach(function (b) {
     var tmpBooking = {
-      bookingid: b.bookingid,
-    }
+      bookingid: b.bookingId,
+    };
 
     payload.push(tmpBooking);
   });
 
   return payload;
-}
+};
 
-exports.booking = function(accept, rawBooking){
+exports.booking = function (accept, rawBooking) {
   try {
     var booking = {
-      'firstname' : rawBooking.firstname,
-      'lastname' : rawBooking.lastname,
-      'totalprice' : parseInt(rawBooking.totalprice),
-      'depositpaid' : Boolean(rawBooking.depositpaid),
-      'bookingdates' : {
-        'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
-        'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
-      }
-    }
+      firstname: rawBooking.firstname,
+      lastname: rawBooking.lastname,
+      totalprice: parseInt(rawBooking.totalprice),
+      depositpaid: Boolean(rawBooking.depositpaid),
+      bookingdates: {
+        checkin: dateFormat(rawBooking.bookingdates.checkin, 'yyyy-mm-dd'),
+        checkout: dateFormat(rawBooking.bookingdates.checkout, 'yyyy-mm-dd'),
+      },
+    };
 
-    if(typeof(rawBooking.additionalneeds) !== 'undefined'){
+    if (typeof rawBooking.additionalneeds !== 'undefined') {
       booking.additionalneeds = rawBooking.additionalneeds;
     }
 
-    switch(accept){
+    switch (accept) {
       case 'application/xml':
         return js2xmlparser.parse('booking', booking);
         break;
@@ -49,34 +49,34 @@ exports.booking = function(accept, rawBooking){
       default:
         return null;
     }
-  } catch(err) {
+  } catch (err) {
     return err.message;
   }
-}
+};
 
-exports.bookingWithId = function(req, rawBooking){
+exports.bookingWithId = function (req, rawBooking) {
   try {
     var booking = {
-      'firstname' : rawBooking.firstname,
-      'lastname' : rawBooking.lastname,
-      'totalprice' : parseInt(rawBooking.totalprice),
-      'depositpaid' : Boolean(rawBooking.depositpaid),
-      'bookingdates' : {
-        'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
-        'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
-      }
-    }
-  
-    if(typeof(rawBooking.additionalneeds) !== 'undefined'){
+      firstname: rawBooking.firstname,
+      lastname: rawBooking.lastname,
+      totalprice: parseInt(rawBooking.totalprice),
+      depositpaid: Boolean(rawBooking.depositpaid),
+      bookingdates: {
+        checkin: dateFormat(rawBooking.bookingdates.checkin, 'yyyy-mm-dd'),
+        checkout: dateFormat(rawBooking.bookingdates.checkout, 'yyyy-mm-dd'),
+      },
+    };
+
+    if (typeof rawBooking.additionalneeds !== 'undefined') {
       booking.additionalneeds = rawBooking.additionalneeds;
     }
-  
+
     var payload = {
-      "bookingid" : rawBooking.bookingid,
-      "booking" : booking
-    }
-  
-    switch(req.headers.accept){
+      bookingid: rawBooking.bookingid,
+      booking: booking,
+    };
+
+    switch (req.headers.accept) {
       case 'application/xml':
         return js2xmlparser.parse('created-booking', payload);
         break;
@@ -92,7 +92,7 @@ exports.bookingWithId = function(req, rawBooking){
       default:
         return null;
     }
-  } catch(err) {
+  } catch (err) {
     return err.message;
   }
-}
+};

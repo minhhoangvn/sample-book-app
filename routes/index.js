@@ -126,7 +126,6 @@ router.get('/booking', function (req, res, next) {
 
   Booking.getIDs(query, function (err, record) {
     var booking = parse.bookingids(req, record);
-
     if (!booking) {
       res.sendStatus(418);
     } else {
